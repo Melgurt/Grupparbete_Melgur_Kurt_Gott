@@ -1,5 +1,15 @@
 # Det här är huvudstrukturen vi håller oss till i programmet 
+import random
+health_points = 10
+strength = 10
+level = 1
+inventory = [""]
+item_strength = 0
 
+
+def sum_strength_comparison(playerstrength, monsterstrength):
+    sum_playerstrength = strength + item_strength
+    monsterstrength = random.randint(1, 21)
 # Men vi kommer såklart behöver hitta åp lite annat ibland    
 
     # Print the main menu
