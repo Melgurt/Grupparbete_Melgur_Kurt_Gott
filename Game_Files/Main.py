@@ -1,29 +1,33 @@
-# Det här är huvudstrukturen vi håller oss till i programmet 
 import random
 health_points = 10
 strength = 10
 level = 1
 inventory = [""]
-item_strength = 0
 
+class item:
+    def __init__(self, name, strength):
+        self.name = name
+        self.strength = strength
+class player:
+    def __init__(self, strength, hp, inventory, level):
+        self.strength = strength
+        self.hp = hp 
+        self.inventory = inventory
+        self.level = level
+
+    def take_hp(amount):
+        self.hp -= amount
 
 def sum_strength_comparison(playerstrength, monsterstrength):
-    sum_playerstrength = strength + item_strength
+    sum_playerstrength = strength + item.strength
     monsterstrength = random.randint(1, 21)
-# Men vi kommer såklart behöver hitta åp lite annat ibland    
+#vi ska göra till klass
 
-    # Print the main menu
-
-    # Print the first part of the story
 
 print("story blalal")
 
-    # Grant the player with a choice 
-
 print("You are granted with a choice where you can choose two paths. Please enter right or left")
 first_choice = input(">")
-
-    # Create an if, elif and else statement
 
 if(first_choice == "right"):
     print("You chose right")
@@ -34,10 +38,6 @@ elif (first_choice == "left"):
 else:
     print("Please enter right or left")
 
-    # Print more story
-
 print("More story bblblbl")
 
-    # Grant Choice 
 
-    # Create an if, elif and else statement
