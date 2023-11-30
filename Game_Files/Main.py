@@ -4,25 +4,30 @@ strength = 10
 level = 1
 inventory = [""]
 
-class item:
-    def __init__(self, name, strength):
+class Item:
+    def __init__(self, name, damage):
         self.name = name
-        self.strength = strength
-class player:
-    def __init__(self, strength, hp, inventory, level):
+        self.damage = damage
+class Player:
+    def __init__(self, strength, hp, level):
         self.strength = strength
         self.hp = hp 
-        self.inventory = inventory
+        self.inventory = []
         self.level = level
 
-    def take_hp(amount):
-        self.hp -= amount
+        def player_take_hp(amount):
+            self.hp -= amount
 
-def sum_strength_comparison(playerstrength, monsterstrength):
-    sum_playerstrength = strength + item.strength
-    monsterstrength = random.randint(1, 21)
-#vi ska göra till klass
+        def fill_inventory(item: Item):
+            self.inventory.append(item)
 
+class Villain:
+    def __init__(self, hp, strength):
+        self.hp = hp
+        self.strength = strength
+
+        def villain_take_hp(amount):
+            self.hp -= amount
 
 print("story blalal")
 
