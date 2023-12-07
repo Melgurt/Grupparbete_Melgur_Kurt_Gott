@@ -3,16 +3,34 @@ from player import Player
 from villain import Villain
 from item import Item
 from battle import battle
+import sys
+
 
 player1 = Player(5, 1)
 auto_weapon = Item("Fists")
 player1.fill_inventory(auto_weapon)
+
+def menu():
+    while True:
+        print("1 , Play game    2 , Close game")
+        print("Choose")
+        menu_choice = int(input("-> "))
+        if menu_choice == 1:
+            break
+
+        elif menu_choice == 2:
+            sys.exit()
+
+        else:
+            print("Choose 1 or 2")
+    
 
 def list_print(list):
     for i in range(len(player1.inventory)):
         for f in player1.inventory:
             print(i + 1, ", ", f.name)
 
+menu()
 
 print("I don't care to write any story blöblböblöbblöbl")
 print("You are granted with a choice where you can choose two paths. Please enter right or left")
