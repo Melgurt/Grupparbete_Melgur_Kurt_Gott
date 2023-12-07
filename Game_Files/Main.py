@@ -9,6 +9,7 @@ import sys
 player1 = Player(5, 1)
 auto_weapon = Item("Fists")
 player1.fill_inventory(auto_weapon)
+weapon_list = ["Battle Axe", "Club", "Flail", "Mace", "War Hammer", "Dagger", "Katana", "Longsword", "Rapier", "Shortsword", "Lance", "Pike", "Spear", "War Scythe", "Swordstaff", "Knuckle-Dusters"]
 
 def menu():
     while True:
@@ -16,7 +17,7 @@ def menu():
         print("Choose")
         menu_choice = int(input("-> "))
         if menu_choice == 1:
-            break
+            game()
 
         elif menu_choice == 2:
             sys.exit()
@@ -25,72 +26,254 @@ def menu():
             print("Choose 1 or 2")
     
 
-def list_print(list):
+def game():
+    while True:
+        print("1. Story    2. Inventory    3. Stats    4. Exit Game")
+        choice = int(input("-> "))
+
+        if choice == 1:
+            print("I don't care to write any story blöblböblöbblöbl")
+            print("You are granted with a choice where you can choose three paths. Please enter right, left or forward")
+        
+            chosen_path = input("-> ")
+
+            while True:
+                if chosen_path == "left":
+                    print("You chose left, story, story, story")
+                    random_story()
+        
+                elif chosen_path == "right":
+                    print("You chose right, sroty story story")
+                    random_story()
+        
+                elif chosen_path == "forward":
+                    print("You chose forward, story story storyr")
+                    random_story()
+                
+                else:
+                    print("Choose between right, left or forward")
+
+        elif choice == 2:
+            list_print()
+            
+        
+        elif choice == 3:
+            print("Stats:")
+
+            print(f"You have {player1.hp}hp")
+            print(f"You are level {player1.level}")
+            print(f"You have {player1.strength} strength")
+
+            print("------------------------------------")
+            
+        
+        elif choice == 4:
+            sys.exit()
+        
+        else:
+            print("Choose 1, 2, 3 or 4")
+
+
+
+            
+def random_story():
+    i = random.randint(0, 3)
+    if i == 0:
+        chest_room()
+    elif i == 1:
+        villain_room()
+    elif i == 2:
+        trap_room()
+
+
+
+def list_print():
+    print("Inventory:")
     for i in range(len(player1.inventory)):
         for f in player1.inventory:
-            print(i + 1, ", ", f.name)
+            print(f"Item {i+1}, {f.name}")
+    print("-----------------------------------------------")
 
-menu()
+def chest_room():
+    print("You entered a room with a chest and opened it")
 
-print("I don't care to write any story blöblböblöbblöbl")
-print("You are granted with a choice where you can choose two paths. Please enter right or left")
+    weapon = Item(weapon_list[random.randint(0, 16)])
+    print(f"In the chest is {weapon.name}")
 
-while True:
-    
-    first_choice = input(">")
-    
-    if(first_choice == "right"):
-        
-        print("You chose right")
-        print("You enterd a room with a chest")
-        
-        weapon_first_choice = Item("Knuckle-duster")
-        
-        print(f"You foudnd chest, inside the chest {weapon_first_choice.name}")
-        print("Do you want to take this weapon?")
-        
-        yes_or_no_weapon = input("yes/no -> ")
+    print("Do you want to take this weapon?")
 
+    yes_or_no_weapon = input("yes/no -> ")
+
+    while True:
         if(yes_or_no_weapon == "yes"):
             
             print("You chose to take the weapon")
-            print("What invetory place do you want the item to be, please enter a number 1-5")
 
-            invetory_slot_choice = int(input("> ")) - 1
+            if len(player1.inventory) > 4:
+                print("You have too many items in inventory")
+                print(f"Which weapon do you want to throw away? {list_print}")
+                weapon_delete_index = int(input("-> "))
+                player1.fill_inventory(weapon)
+                break
+        
+            else:
+                player1.fill_inventory(weapon)
+                break
 
-            player1.fill_inventory(weapon_first_choice, invetory_slot_choice)
-        
-            break
-        
         elif(yes_or_no_weapon == "no"):
         
             print("You chose not to take the weapon")
-        
             break
 
-        break
+def trap_room():
+    print("Oh no! you have stepped into a trap")
 
-    elif (first_choice == "left"):
-        
-        print("You chose left")
-        print("OAOOAOAWWW CRAAAP you enterd a room with a monster in it")
-        print("What weapon you choose in your inventory?")
-        list_print(player1.inventory)
-        
-        weapon_slot = int(input(">"))
-        
-        player1_weapon_compare = player1.inventory[weapon_slot-1]
-        
-        villain_first_choice= Villain()
+    damage_taken = random.randint(0, 1)
+    print(f"You have lost {damage_taken}hp")
 
-        battle(player1, player1_weapon_compare, villain_first_choice)
+    player1.player_take_hp(damage_taken)
 
-        break
+    print(f"You now have {player1.hp}hp")
 
-    print("Please enter right or left")
+def villain_room():
+    print("OAOOAOAWWW CRAAAP you enterd a room with a monster in it")
+    print("What weapon you choose in your inventory?")
+    
+    list_print(player1.inventory)
+        
+    weapon_slot = int(input(">"))
+        
+    player1_weapon_compare = player1.inventory[weapon_slot-1]
+        
+    villain_first_choice= Villain()
+
+    battle(player1, player1_weapon_compare, villain_first_choice)    
+
+menu()
+
+# while True:
+    
+#     first_choice = input(">")
+    
+#     if(first_choice == "right"):
+        
+#         print("You chose right")
+#         print("You enterd a room with a chest")
+        
+#         weapon_first_choice = Item("Knuckle-duster")
+        
+#         print(f"You foudnd chest, inside the chest {weapon_first_choice.name}")
+#         print("Do you want to take this weapon?")
+        
+#         yes_or_no_weapon = input("yes/no -> ")
+
+#         if(yes_or_no_weapon == "yes"):
+            
+#             print("You chose to take the weapon")
+#             print("What invetory place do you want the item to be, please enter a number 1-5")
+
+#             invetory_slot_choice = int(input("> ")) - 1
+
+#             player1.fill_inventory(weapon_first_choice)
+        
+#             break
+        
+#         elif(yes_or_no_weapon == "no"):
+        
+#             print("You chose not to take the weapon")
+        
+#             break
+
+#         break
+
+#     elif (first_choice == "left"):
+        
+#         print("You chose left")
+#         print("OAOOAOAWWW CRAAAP you enterd a room with a monster in it")
+#         print("What weapon you choose in your inventory?")
+#         list_print(player1.inventory)
+        
+#         weapon_slot = int(input(">"))
+        
+#         player1_weapon_compare = player1.inventory[weapon_slot-1]
+        
+#         villain_first_choice= Villain()
+
+#         battle(player1, player1_weapon_compare, villain_first_choice)
+
+#         break
+
+#     elif (first_choice == "forward"):
+#         print("You went through a trap")
+#         print("You lost 1 hp")
+#         player1.player_take_hp(1)
+
+#     print("Please enter right or left")
     
 
 
-print("More story blölöblbölbölböl, hope no villain in next door.(You're gonna die)")
+# print("More story blölöblbölbölböl, hope no villain in next door you choose.(You're gonna die)")
+# print("Choose next path: left, right or forward")
+
+# while True:
+#     second_choice = input("-> ")
+    
+#     if(second_choice == "right"):
+        
+#         print("You chose right")
+#         print("You enterd a room with a chest")
+        
+#         weapon_second_choice = Item("")
+        
+#         print(f"You foudnd chest, inside the chest {weapon_second_choice.name}")
+#         print("Do you want to take this weapon?")
+        
+#         yes_or_no_weapon = input("yes/no -> ")
+
+#         if(yes_or_no_weapon == "yes"):
+            
+#             print("You chose to take the weapon")
+#             print("What invetory place do you want the item to be, please enter a number 1-5")
+
+#             invetory_slot_choice = int(input("> ")) - 1
+
+#             player1.fill_inventory(weapon_first_choice)
+        
+#             break
+        
+#         elif(yes_or_no_weapon == "no"):
+        
+#             print("You chose not to take the weapon")
+        
+#             break
+
+#         break
+
+#     elif (second_choice == "left"):
+        
+#         print("You chose left")
+#         print("OAOOAOAWWW CRAAAP you enterd a room with a monster in it")
+#         print("What weapon you choose in your inventory?")
+#         list_print(player1.inventory)
+        
+#         weapon_slot = int(input(">"))
+        
+#         player1_weapon_compare = player1.inventory[weapon_slot-1]
+        
+#         villain_first_choice= Villain()
+
+#         battle(player1, player1_weapon_compare, villain_first_choice)
+
+#         break
+
+#     elif (second_choice == "forward"):
+#         print("You went through a gas trap")
+#         print("You lost 1 hp")
+#         player1.player_take_hp(1)
+
+#     print("Please enter right or left")
+    
+
+
 
 
