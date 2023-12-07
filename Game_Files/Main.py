@@ -34,24 +34,28 @@ def game():
         if choice == 1:
             print("I don't care to write any story blöblböblöbblöbl")
             print("You are granted with a choice where you can choose three paths. Please enter right, left or forward")
-        
+            chosen_path = 0
             chosen_path = input("-> ")
 
             while True:
                 if chosen_path == "left":
                     print("You chose left, story, story, story")
                     random_story()
+                    break
         
                 elif chosen_path == "right":
                     print("You chose right, sroty story story")
                     random_story()
+                    break
         
                 elif chosen_path == "forward":
                     print("You chose forward, story story storyr")
                     random_story()
+                    break
                 
                 else:
-                    print("Choose between right, left or forward")
+                    print("You went back to menu")
+                    break
 
         elif choice == 2:
             list_print()
@@ -72,6 +76,7 @@ def game():
         
         else:
             print("Choose 1, 2, 3 or 4")
+        
 
 
 
@@ -89,9 +94,8 @@ def random_story():
 
 def list_print():
     print("Inventory:")
-    for i in range(len(player1.inventory)):
-        for f in player1.inventory:
-            print(f"Item {i+1}, {f.name}")
+    for f in player1.inventory:
+        print(f"Item {player1.inventory.index(f)+1}, {f.name}")
     print("-----------------------------------------------")
 
 def chest_room():
@@ -139,7 +143,7 @@ def villain_room():
     print("OAOOAOAWWW CRAAAP you enterd a room with a monster in it")
     print("What weapon you choose in your inventory?")
     
-    list_print(player1.inventory)
+    list_print()
         
     weapon_slot = int(input(">"))
         
