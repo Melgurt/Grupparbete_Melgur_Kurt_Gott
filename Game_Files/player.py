@@ -18,3 +18,9 @@ class Player:
     
     def delete_inventory(self, index):
         self.inventory.pop(index - 1)
+
+    def player_death(self):
+        self.strength = 5
+        self.hp = help
+        self.level = 1
+        self.inventory = []

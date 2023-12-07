@@ -13,13 +13,16 @@ weapon_list = ["Battle Axe", "Club", "Flail", "Mace", "War Hammer", "Dagger", "K
 
 def menu():
     while True:
+
         print("1 , Play game    2 , Close game")
         print("Choose")
-        menu_choice = int(input("-> "))
-        if menu_choice == 1:
+        
+        menu_choice = input("-> ")
+        
+        if menu_choice == "1":
             game()
 
-        elif menu_choice == 2:
+        elif menu_choice == "2":
             sys.exit()
 
         else:
@@ -28,10 +31,34 @@ def menu():
 
 def game():
     while True:
-        print("1. Story    2. Inventory    3. Stats    4. Exit Game")
-        choice = int(input("-> "))
 
-        if choice == 1:
+        if player1.hp <= 0:
+            print("YOU HAVE DIED")
+            player1.player_death()
+            auto_weapon = Item("Fists")
+            player1.fill_inventory(auto_weapon)
+
+            print("Do you want to retry?")
+            retry_input = input("yes/any input -> ")
+
+            if retry_input == "yes":
+                game()
+
+            else:
+                sys.exit()
+        
+        elif player1.level >= 10:
+            for i in range(0, 10):
+                print("YOU HAVE WON")
+
+        else:
+            continue
+
+
+        print("1. Story    2. Inventory    3. Stats    4. Exit Game")
+        choice = input("-> ")
+
+        if choice == "1":
             print("I don't care to write any story blöblböblöbblöbl")
             print("You are granted with a choice where you can choose three paths. Please enter right, left or forward")
             chosen_path = 0
@@ -57,11 +84,11 @@ def game():
                     print("You went back to menu for writing something else than forward, left or right")
                     break
 
-        elif choice == 2:
+        elif choice == "2":
             list_print()
             
         
-        elif choice == 3:
+        elif choice == "3":
             print("Stats:")
 
             print(f"You have {player1.hp}hp")
@@ -71,7 +98,7 @@ def game():
             print("------------------------------------")
             
         
-        elif choice == 4:
+        elif choice == "4":
             sys.exit()
         
         else:
@@ -115,8 +142,19 @@ def chest_room():
 
             if len(player1.inventory) > 4:
                 print("You have too many items in inventory")
-                print(f"Which weapon do you want to throw away? {list_print}")
+                print(f"Which weapon do you want to throw away?")
+                list_print()
+
                 weapon_delete_index = int(input("-> "))
+
+                while True:
+                    if not weapon_delete_index is int:            # GÖR SÅDANA HÄR KANSKE PÅ STÄLLEN       FIXA EXCEPTIONS OCH VINST OCH DÖD
+                        print("Please enter a valid number")
+                        weapon_delete_index = int(input("-> "))
+                    elif weapon_delete_index is int:
+                        break
+                        
+                player1.delete_inventory(weapon_delete_index)
                 player1.fill_inventory(weapon)
                 break
         
@@ -127,6 +165,10 @@ def chest_room():
         elif(yes_or_no_weapon == "no"):
         
             print("You chose not to take the weapon")
+            break
+
+        else:
+            print("You gave the wrong input, now you are in the menu, yes/no means yes or no")
             break
 
 def trap_room():
