@@ -7,13 +7,11 @@ from battle import battle
 player1 = Player(5, 1)
 auto_weapon = Item("Fists")
 player1.fill_inventory(auto_weapon)
-print()
 
 def list_print(list):
-    for i in player1.inventory:
-        print(f"{i} + {i.name}")
-
-
+    for i in range(len(player1.inventory)):
+        for f in player1.inventory:
+            print(i + 1, ", ", f.name)
 
 
 print("I don't care to write any story blöblböblöbblöbl")
