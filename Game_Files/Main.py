@@ -6,11 +6,12 @@ from battle import battle
 
 player1 = Player(5, 1)
 auto_weapon = Item("Fists")
-player1.fill_inventory(auto_weapon, 0)
+player1.fill_inventory(auto_weapon)
+print()
 
 def list_print(list):
-    for i, item in enumerate(list):
-        print(f"{i + 1}: {item.name}")
+    for i in player1.inventory:
+        print(f"{i} + {i.name}")
 
 
 
@@ -57,7 +58,8 @@ while True:
         
         print("You chose left")
         print("OAOOAOAWWW CRAAAP you enterd a room with a monster in it")
-        print(f"What weapon you choose in your inventory? {list_print(player1.inventory)}")
+        print("What weapon you choose in your inventory?")
+        list_print(player1.inventory)
         
         weapon_slot = int(input(">"))
         
