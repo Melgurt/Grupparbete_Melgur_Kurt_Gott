@@ -54,7 +54,7 @@ def game():
                     break
                 
                 else:
-                    print("You went back to menu")
+                    print("You went back to menu for writing something else than forward, left or right")
                     break
 
         elif choice == 2:
