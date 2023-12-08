@@ -5,7 +5,8 @@ from item import Item
 
 def battle(player : Player, item: Item, villain: Villain):
 
-    print(item.damage + player.strength)
+    print(f"Your damage-> {item.damage + player.strength}")
+    print(f"Villain damage-> {villain.strenght}")
 
     if item.damage + player.strength > villain.strenght:
         villain.villain_take_hp(1)

@@ -43,6 +43,7 @@ def game():
 
             if retry_input == "yes":
                 game()
+                break
 
             else:
                 sys.exit()
@@ -52,7 +53,7 @@ def game():
                 print("YOU HAVE WON")
 
         else:
-            continue
+            pass
 
 
         print("1. Story    2. Inventory    3. Stats    4. Exit Game")
@@ -109,7 +110,8 @@ def game():
 
             
 def random_story():
-    i = random.randint(0, 3)
+    print("Böböböb")
+    i = random.randint(0, 2)
     if i == 0:
         chest_room()
     elif i == 1:
@@ -120,12 +122,18 @@ def random_story():
 
 
 def list_print():
+
     print("Inventory:")
     for f in player1.inventory:
         print(f"Item {player1.inventory.index(f)+1}, {f.name}")
     print("-----------------------------------------------")
 
 def chest_room():
+
+    for _ in range(0, 6):
+        print("")
+    print("_________________________________________________________________")
+
     print("You entered a room with a chest and opened it")
 
     weapon = Item(weapon_list[random.randint(0, 16)])
@@ -149,7 +157,7 @@ def chest_room():
 
                 while True:
                     if not weapon_delete_index is int:            # GÖR SÅDANA HÄR KANSKE PÅ STÄLLEN       FIXA EXCEPTIONS OCH VINST OCH DÖD
-                        print("Please enter a valid number")
+                        print("Please enter a valid NUMBER")
                         weapon_delete_index = int(input("-> "))
                     elif weapon_delete_index is int:
                         break
@@ -172,9 +180,13 @@ def chest_room():
             break
 
 def trap_room():
+    for _ in range(0, 6):
+        print("")
+    print("_________________________________________________________________")
+
     print("Oh no! you have stepped into a trap")
 
-    damage_taken = random.randint(0, 1)
+    damage_taken = random.randint(0, 4)
     print(f"You have lost {damage_taken}hp")
 
     player1.player_take_hp(damage_taken)
@@ -182,6 +194,11 @@ def trap_room():
     print(f"You now have {player1.hp}hp")
 
 def villain_room():
+
+    for _ in range(0, 6):
+        print("")
+    print("_________________________________________________________________")
+
     print("OAOOAOAWWW CRAAAP you enterd a room with a monster in it")
     print("What weapon you choose in your inventory?")
     
