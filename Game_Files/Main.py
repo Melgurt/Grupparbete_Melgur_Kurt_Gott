@@ -146,7 +146,7 @@ def chest_room():
         else:
             yes_or_no_weapon = print(f""" 
                                      
-Something went wrong, you put in /"{yes_or_no_weapon}/"
+Something went wrong, you put in "{yes_or_no_weapon}"
 Retry putting in yes or no, not in capitals
 """)
 
