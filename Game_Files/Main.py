@@ -184,7 +184,7 @@ def list_print():
 
     print("Inventory:")
     for f in player1.inventory:
-        print(f"Item {player1.inventory.index(f)+1}, {f.name}")
+        print(f"Item {player1.inventory.index(f)+1}, {f.name}, {f.damage} damage")
     print("-----------------------------------------------")
 
             
