@@ -1,15 +1,77 @@
 import random
-from player import Player
-from villain import Villain
-from item import Item
-from battle import battle
 import sys
+
+
+    
+class Item:
+    def __init__(self, name):
+        self.name = name
+        self.damage = random.randint(1, 21)
+
+class Player:
+    def __init__(self, hp, level):
+        self.strength = 5
+        self.hp = hp 
+        self.inventory = []
+        self.level = level
+
+    def player_levelup(self, amount):
+        self.level += amount
+
+    def player_take_hp(self, amount):
+        self.hp -= amount
+
+    def fill_inventory(self, item):
+        self.inventory.append(item)
+    
+    def delete_inventory(self, index):
+        self.inventory.pop(index - 1)
+
+    def player_death(self, hp, level):
+        self.strength = 5
+        self.hp = hp
+        self.level = level
+        self.inventory = []
+
+class Villain:
+    def __init__(self):
+        self.hp = 1
+        self.strenght = random.randint(1, 19)
+
+    def villain_take_hp(self, amount):
+        self.hp -= amount
+
+
+
+def battle(player : Player, item: Item, villain: Villain):
+
+    print(f"Your damage-> {item.damage + player.strength}")
+    print(f"Villain damage-> {villain.strenght}")
+
+    if item.damage + player.strength > villain.strenght:
+        villain.villain_take_hp(1)
+        print("YOu kill him")
+        print(f"You leveel up {player.level} levels")
+        player.player_levelup(1)
+        print(f"Your level is now {player.level}")
+
+    elif villain.strenght > item.damage + player.strength:
+        player.player_take_hp(1)
+        print("you take dmg")
+        print(f"Your hp is now {player.hp}")
+        
+
+    else:
+        print("You are equal in strength. It lets you pass and go on you weak wack")
+
 
 
 player1 = Player(5, 1)
 auto_weapon = Item("Fists")
 player1.fill_inventory(auto_weapon)
 weapon_list = ["Battle Axe", "Club", "Flail", "Mace", "War Hammer", "Dagger", "Katana", "Longsword", "Rapier", "Shortsword", "Lance", "Pike", "Spear", "War Scythe", "Swordstaff", "Knuckle-Dusters"]
+
+
 
 def menu():
     while True:
@@ -31,29 +93,40 @@ def menu():
 
 def game():
     while True:
+        while True:
+            if player1.hp <= 0:
 
-        if player1.hp <= 0:
-            print("YOU HAVE DIED")
-            player1.player_death()
-            auto_weapon = Item("Fists")
-            player1.fill_inventory(auto_weapon)
+                retry_input = 0
+                print("YOU HAVE DIED")
+                player1.player_death(5, 1)
+                auto_weapon = Item("Fists")
+                player1.fill_inventory(auto_weapon)
 
-            print("Do you want to retry?")
-            retry_input = input("yes/any input -> ")
+                print("Do you want to retry?")
+                retry_input = input("yes/(any input) -> ")
 
-            if retry_input == "yes":
-                game()
-                break
+                if retry_input != "yes":
+                    sys.exit()
+
+                    
+        
+            elif player1.level >= 10:
+
+                retry_input = 0
+                player1.player_death(5, 1)
+                auto_weapon = Item("Fists")
+                player1.fill_inventory(auto_weapon)
+
+                for i in range(0, 10):
+                    print("YOU HAVE WON")
+                print("Do you want to play again?")
+                retry_input = input("yes/(any input) -> ")
+
+                if retry_input != "yes":
+                    sys.exit()
 
             else:
-                sys.exit()
-        
-        elif player1.level >= 10:
-            for i in range(0, 10):
-                print("YOU HAVE WON")
-
-        else:
-            pass
+                break
 
 
         print("1. Story    2. Inventory    3. Stats    4. Exit Game")
@@ -134,24 +207,24 @@ def chest_room():
 
     print("You entered a room with a chest and opened it")
 
-    weapon = Item(weapon_list[random.randint(0, 16)])
+    weapon = Item(weapon_list[random.randint(0, 15)])
     print(f"In the chest is {weapon.name}")
 
     print("Do you want to take this weapon?")
 
+    yes_or_no_weapon = input("yes/no -> ")
+
     while True:
-        yes_or_no_weapon = input("yes/no -> ")
+        
         if yes_or_no_weapon == "yes" or yes_or_no_weapon == "no":
             break
         else:
-            yes_or_no_weapon = print(f""" 
+            print(f""" 
                                      
 Something went wrong, you put in "{yes_or_no_weapon}"
 Retry putting in yes or no, not in capitals
-""")
-
-    
-
+""") 
+        yes_or_no_weapon = input("yes/no -> ")
 
     while True:
         if(yes_or_no_weapon == "yes"):
@@ -163,14 +236,17 @@ Retry putting in yes or no, not in capitals
                 print(f"Which weapon do you want to throw away?")
                 list_print()
 
-                weapon_delete_index = int(input("-> "))
-
                 while True:
-                    if not weapon_delete_index is int:            # GÖR SÅDANA HÄR KANSKE PÅ STÄLLEN       FIXA EXCEPTIONS OCH VINST OCH DÖD
-                        print("Please enter a valid NUMBER")
+                    try:
                         weapon_delete_index = int(input("-> "))
-                    elif weapon_delete_index is int:
+                        for i in range(1, len(player1.inventory) + 1):
+                            if weapon_delete_index == i:
+                                break
                         break
+                    except ValueError:
+                        print("Choose a valid number from the list")
+                        list_print()
+
                         
                 player1.delete_inventory(weapon_delete_index)
                 player1.fill_inventory(weapon)
@@ -214,34 +290,35 @@ def villain_room():
     
     list_print()
         
-    weapon_slot = input(">")
 
     
     while True:
         try:
-            int(weapon_slot)
-        except:
-            pass
-        
-        if weapon_slot is int:
-            for i in range(1, len(player1.inventory)+1):
+            chosen_weapon = input("-> ")
+            chosen_weapon = int(chosen_weapon)
 
-                if weapon_slot == i:
+            for i in range(1, len(player1.inventory)+1):
+                if chosen_weapon == i:
                     break
-        
-        else:
+
+            try:
+                player1_weapon_compare = player1.inventory[chosen_weapon-1]
+
+            except IndexError:
+                print("Yu can not choose that number") 
+
+            villain_first_choice= Villain()
+            battle(player1, player1_weapon_compare, villain_first_choice) 
+            break 
+
+        except ValueError:
             print(f"""
 
-Something went wrong, you put in "{weapon_slot}"
+Something went wrong, you put in "{chosen_weapon}"
 Retry putting in one of the numbers
 """)
-            weapon_slot = input("->")
-        
-    player1_weapon_compare = player1.inventory[weapon_slot-1]
-        
-    villain_first_choice= Villain()
-
-    battle(player1, player1_weapon_compare, villain_first_choice)    
+        except Exception as e:
+            print(f"You have put in wrong input")
 
 menu()
 

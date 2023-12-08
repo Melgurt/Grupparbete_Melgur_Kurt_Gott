@@ -5,7 +5,7 @@ class Player:
         self.strength = 5
         self.hp = hp 
         self.inventory = []
-        self.level = 1
+        self.level = level
 
     def player_levelup(self, amount):
         self.level += amount
@@ -19,8 +19,8 @@ class Player:
     def delete_inventory(self, index):
         self.inventory.pop(index - 1)
 
-    def player_death(self):
+    def player_death(self, hp, level):
         self.strength = 5
-        self.hp = help
-        self.level = 1
+        self.hp = hp
+        self.level = level
         self.inventory = []
