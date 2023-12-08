@@ -106,7 +106,12 @@ def game():
             print("Choose 1, 2, 3 or 4")
         
 
+def list_print():
 
+    print("Inventory:")
+    for f in player1.inventory:
+        print(f"Item {player1.inventory.index(f)+1}, {f.name}")
+    print("-----------------------------------------------")
 
             
 def random_story():
@@ -121,13 +126,6 @@ def random_story():
 
 
 
-def list_print():
-
-    print("Inventory:")
-    for f in player1.inventory:
-        print(f"Item {player1.inventory.index(f)+1}, {f.name}")
-    print("-----------------------------------------------")
-
 def chest_room():
 
     for _ in range(0, 6):
@@ -141,7 +139,19 @@ def chest_room():
 
     print("Do you want to take this weapon?")
 
-    yes_or_no_weapon = input("yes/no -> ")
+    while True:
+        yes_or_no_weapon = input("yes/no -> ")
+        if yes_or_no_weapon == "yes" or yes_or_no_weapon == "no":
+            break
+        else:
+            yes_or_no_weapon = print(f""" 
+                                     
+Something went wrong, you put in /"{yes_or_no_weapon}/"
+Retry putting in yes or no, not in capitals
+""")
+
+    
+
 
     while True:
         if(yes_or_no_weapon == "yes"):
@@ -204,7 +214,28 @@ def villain_room():
     
     list_print()
         
-    weapon_slot = int(input(">"))
+    weapon_slot = input(">")
+
+    
+    while True:
+        try:
+            int(weapon_slot)
+        except:
+            pass
+        
+        if weapon_slot is int:
+            for i in range(1, len(player1.inventory)+1):
+
+                if weapon_slot == i:
+                    break
+        
+        else:
+            print(f"""
+
+Something went wrong, you put in "{weapon_slot}"
+Retry putting in one of the numbers
+""")
+            weapon_slot = input("->")
         
     player1_weapon_compare = player1.inventory[weapon_slot-1]
         
