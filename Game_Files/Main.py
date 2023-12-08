@@ -36,7 +36,7 @@ class Player:
 class Villain:
     def __init__(self):
         self.hp = 1
-        self.strenght = random.randint(1, 19)
+        self.strength = random.randint(1, 19)
 
     def villain_take_hp(self, amount):
         self.hp -= amount
@@ -46,16 +46,16 @@ class Villain:
 def battle(player : Player, item: Item, villain: Villain):
 
     print(f"Your damage-> {item.damage + player.strength}")
-    print(f"Villain damage-> {villain.strenght}")
+    print(f"Villain damage-> {villain.strength}")
 
-    if item.damage + player.strength > villain.strenght:
+    if item.damage + player.strength > villain.strength:
         villain.villain_take_hp(1)
         print("YOu kill him")
         print(f"You leveel up {player.level} levels")
         player.player_levelup(1)
         print(f"Your level is now {player.level}")
 
-    elif villain.strenght > item.damage + player.strength:
+    elif villain.strength > item.damage + player.strength:
         player.player_take_hp(1)
         print("you take dmg")
         print(f"Your hp is now {player.hp}")
@@ -117,7 +117,8 @@ def game():
                 auto_weapon = Item("Fists")
                 player1.fill_inventory(auto_weapon)
 
-                for i in range(0, 10):
+                
+                for _ in range(0, 10):
                     print("YOU HAVE WON")
                 print("Do you want to play again?")
                 retry_input = input("yes/(any input) -> ")
@@ -317,7 +318,7 @@ def villain_room():
 Something went wrong, you put in "{chosen_weapon}"
 Retry putting in one of the numbers
 """)
-        except Exception as e:
+        except:
             print(f"You have put in wrong input")
 
 menu()
